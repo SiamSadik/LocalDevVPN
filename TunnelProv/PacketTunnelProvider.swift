@@ -26,6 +26,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         deviceIpValue = ipToUInt32(tunnelDeviceIp)
         fakeIpValue = ipToUInt32(tunnelFakeIp)
         
+        NSLog("LocalDevVPN-CUSTOM-ROUTE-ACTIVE dev=\(tunnelDeviceIp) fake=\(tunnelFakeIp) mask=\(tunnelSubnetMask)")
+
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: tunnelDeviceIp)
         let ipv4 = NEIPv4Settings(addresses: [tunnelDeviceIp], subnetMasks: [tunnelSubnetMask])
         // iOS 26.4+ lockdown resets device connections that arrive over the utun tunnel
