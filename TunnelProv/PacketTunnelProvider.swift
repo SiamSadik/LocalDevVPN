@@ -28,7 +28,17 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: tunnelDeviceIp)
         let ipv4 = NEIPv4Settings(addresses: [tunnelDeviceIp], subnetMasks: [tunnelSubnetMask])
-        ipv4.includedRoutes = [NEIPv4Route(destinationAddress: tunnelDeviceIp, subnetMask: tunnelSubnetMask)]
+        // iOS 26.4+ lockdown resets device connections that arrive over the utun tunnel
+        // unless the tunnel's source IP falls inside the WiFi subnet, so users set the
+        // tunnel/fake IPs inside their LAN range. But when the fake peer IP is inside the
+        // WiFi subnet, the /24 route below competes with the physical Wi-Fi interface's
+        // on-link /24 route and loses, making the peer unreachable (ARP for a device that
+        // does not exist). Add a /32 route for the fake peer IP so it wins the lookup and
+        // is always delivered into the tunnel regardless of the LAN subnet.
+        ipv4.includedRoutes = [
+            NEIPv4Route(destinationAddress: tunnelDeviceIp, subnetMask: tunnelSubnetMask),
+            NEIPv4Route(destinationAddress: tunnelFakeIp, subnetMask: "255.255.255.255")
+        ]
         ipv4.excludedRoutes = [.default()]
         settings.ipv4Settings = ipv4
         

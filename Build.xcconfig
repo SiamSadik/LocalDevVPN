@@ -6,7 +6,8 @@ CURRENT_PROJECT_VERSION = 1
 
 // Vars to be overwritten by `CodeSigning.xcconfig` if exists
 DEVELOPMENT_TEAM = 42Q7QX86GV
-ORG_IDENTIFIER = com.jkcoxson
+// Custom fork: distinct bundle ID so this build installs alongside the App Store version
+ORG_IDENTIFIER = com.siamsadik
 
 // Codesigning settings defined optionally, see `CodeSigning.xcconfig.example`
 #include? "CodeSigning.xcconfig"

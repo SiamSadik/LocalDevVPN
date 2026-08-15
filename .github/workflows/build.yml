@@ -1,13 +1,13 @@
-name: Build IPA with Fake Signing
+name: Build LocalDevVPN IPA (fake-signed)
 
 on:
     push:
-        branches: [main] # Or your default branch
-    workflow_dispatch: # Allows manual triggering
+        branches: [main]
+    workflow_dispatch:
 
 jobs:
     build:
-        runs-on: macos-latest # Use the latest macOS runner
+        runs-on: macos-latest
 
         steps:
             - name: Checkout repository
@@ -16,16 +16,13 @@ jobs:
             - name: Install ldid
               run: brew install ldid
 
-            - name: Select Xcode version
-              run: sudo xcode-select -s /Applications/Xcode_16.2.app
-
             - name: Build Xcode Archive
               run: |
                   xcodebuild archive \
-                    -project StosVPN.xcodeproj \
-                    -scheme StosVPN \
+                    -project LocalDevVPN.xcodeproj \
+                    -scheme LocalDevVPN \
                     -destination 'generic/platform=iOS' \
-                    -archivePath build/StosVPN.xcarchive \
+                    -archivePath build/LocalDevVPN.xcarchive \
                     CODE_SIGN_IDENTITY="" \
                     CODE_SIGNING_REQUIRED=NO \
                     CODE_SIGNING_ALLOWED=NO
@@ -34,33 +31,30 @@ jobs:
               run: mkdir -p Payload
 
             - name: Copy App to Payload
-              run: cp -R build/StosVPN.xcarchive/Products/Applications/StosVPN.app Payload/StosVPN.app
+              run: cp -R build/LocalDevVPN.xcarchive/Products/Applications/LocalDevVPN.app Payload/LocalDevVPN.app
 
-            - name: Find and Sign App Extension
+            - name: Find and Fake-sign App Extension
               run: |
-                  APPEX_PATH=$(find Payload/StosVPN.app/PlugIns -name "*.appex" | head -n 1)
+                  APPEX_PATH=$(find Payload/LocalDevVPN.app/PlugIns -name "*.appex" | head -n 1)
                   if [ -z "$APPEX_PATH" ]; then
                     echo "Error: App Extension (.appex) not found in PlugIns directory."
                     exit 1
                   fi
                   echo "Found App Extension at: $APPEX_PATH"
-                  # Use the specific entitlements for the extension
                   ldid -S"${GITHUB_WORKSPACE}/TunnelProv/TunnelProv.entitlements" "$APPEX_PATH/$(basename "$APPEX_PATH" .appex)"
-                  echo "Signed App Extension."
+                  echo "Fake-signed App Extension."
 
-            - name: Sign Main App Bundle
+            - name: Fake-sign Main App Bundle
               run: |
-                  APP_BINARY_PATH="Payload/StosVPN.app/StosVPN"
-                  # Use the specific entitlements for the main app
-                  ldid -S"${GITHUB_WORKSPACE}/StosVPN/StosVPN.entitlements" "$APP_BINARY_PATH"
-                  echo "Signed Main App Bundle."
+                  APP_BINARY_PATH="Payload/LocalDevVPN.app/LocalDevVPN"
+                  ldid -S"${GITHUB_WORKSPACE}/LocalDevVPN/LocalDevVPN.entitlements" "$APP_BINARY_PATH"
+                  echo "Fake-signed Main App Bundle."
 
             - name: Create IPA
-              run: |
-                  zip -r ./StosVPN-fakesigned.ipa Payload
+              run: zip -r ./LocalDevVPN-custom.ipa Payload
 
             - name: Upload IPA Artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: StosVPN-IPA.ipa
-                  path: StosVPN-fakesigned.ipa
+                  name: LocalDevVPN-custom-ipa
+                  path: LocalDevVPN-custom.ipa

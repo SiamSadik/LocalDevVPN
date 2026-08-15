@@ -1189,10 +1189,10 @@ struct SettingsView: View {
                     message: Text("warning_message"),
                     dismissButton: .cancel(Text("understand_button")) {
                         shownTunnelAlert = true
-
-                        deviceIP = "10.7.0.0"
-                        fakeIP = "10.7.0.1"
-                        subnetMask = "255.255.255.0"
+                        // Custom builds keep the user's entered IPs here. The stock app
+                        // silently resets them to 10.7.0.0/10.7.0.1 on first edit, which
+                        // silently reverts any in-subnet configuration the user needs for
+                        // iOS 26.4+ lockdown. Do not reset the values.
                     }
                 )
             }
