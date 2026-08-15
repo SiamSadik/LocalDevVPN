@@ -1,0 +1,25 @@
+{
+  "name": "SiamSadik Custom",
+  "identifier": "com.siamsadik.custom.source",
+  "sourceURL": "https://raw.githubusercontent.com/SiamSadik/LocalDevVPN/main/app.json",
+  "apps": [
+    {
+      "name": "LocalDevVPN",
+      "bundleIdentifier": "com.siamsadik.LocalDevVPN",
+      "developerName": "SiamSadik",
+      "subtitle": "Local VPN tunnel with /32 peer route fix",
+      "version": "1.1.6",
+      "versionDate": "2026-08-16T12:00:00Z",
+      "versionDescription": "Custom build adding a /32 route for the fake peer IP so an in-WiFi-subnet peer stays reachable through the utun tunnel (required by the iOS 26.4+ lockdown source-IP check).",
+      "downloadURL": "https://github.com/SiamSadik/LocalDevVPN/releases/download/v1.1.6-custom/LocalDevVPN-custom.ipa",
+      "localizedDescription": "Custom LocalDevVPN build with the /32 peer route fix for iOS 26.4+ lockdown. When installing in SideStore choose \"Keep App Extensions (Use Main Profile)\" so only one App ID is used.",
+      "iconURL": "https://raw.githubusercontent.com/SiamSadik/LocalDevVPN/main/LocalDevVPN/Assets.xcassets/AppIcon.appiconset/image-5.png",
+      "tintColor": "5B5BD6",
+      "size": 5704354,
+      "minOSVersion": "14.0",
+      "permissions": [],
+      "screenshots": []
+    }
+  ],
+  "news": []
+}
