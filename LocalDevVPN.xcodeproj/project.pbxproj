@@ -432,8 +432,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jkcoxson.LocalDevVPN;
+				MARKETING_VERSION = 1.1.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.siamsadik.LocalDevVPN;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -469,8 +469,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jkcoxson.LocalDevVPN;
+				MARKETING_VERSION = 1.1.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.siamsadik.LocalDevVPN;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -493,10 +493,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(TUNNEL_BUNDLE_IDENTIFIER)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=appletvos*]" = com.jkcoxson.LocalDevVPN.TunnelProv;
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.jkcoxson.LocalDevVPN.TunnelProv;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=appletvos*]" = com.siamsadik.LocalDevVPN.TunnelProv;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.siamsadik.LocalDevVPN.TunnelProv;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -519,10 +519,10 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(TUNNEL_BUNDLE_IDENTIFIER)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=appletvos*]" = com.jkcoxson.LocalDevVPN.TunnelProv;
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.jkcoxson.LocalDevVPN.TunnelProv;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=appletvos*]" = com.siamsadik.LocalDevVPN.TunnelProv;
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = com.siamsadik.LocalDevVPN.TunnelProv;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
