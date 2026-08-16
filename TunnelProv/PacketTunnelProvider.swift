@@ -29,16 +29,17 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         NSLog("LocalDevVPN-CUSTOM-ROUTE-ACTIVE dev=\(tunnelDeviceIp) fake=\(tunnelFakeIp) mask=\(tunnelSubnetMask)")
 
         let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: tunnelDeviceIp)
-        let ipv4 = NEIPv4Settings(addresses: [tunnelDeviceIp], subnetMasks: [tunnelSubnetMask])
-        // iOS 26.4+ lockdown resets device connections that arrive over the utun tunnel
-        // unless the tunnel's source IP falls inside the WiFi subnet, so users set the
-        // tunnel/fake IPs inside their LAN range. But when the fake peer IP is inside the
-        // WiFi subnet, the /24 route below competes with the physical Wi-Fi interface's
-        // on-link /24 route and loses, making the peer unreachable (ARP for a device that
-        // does not exist). Add a /32 route for the fake peer IP so it wins the lookup and
-        // is always delivered into the tunnel regardless of the LAN subnet.
+        // /32 everywhere. An in-subnet device IP with a /24 ADDRESS mask would add an
+        // implicit on-link route for the whole LAN subnet via the utun, hijacking
+        // router / DNS / other-host traffic into the tunnel (and an included /24 route
+        // for the fake peer competes with the physical Wi-Fi /24 route and loses, making
+        // the peer unreachable via ARP for a non-existent device). Only the two tunnel
+        // addresses belong inside the utun:
+        //   - the utun's own address (wifiIP + 1) as a /32 — local delivery, no LAN claim
+        //   - the fake peer (wifiIP + 2) via a /32 included route, so peer traffic
+        //     always wins the lookup and enters the tunnel regardless of the LAN subnet
+        let ipv4 = NEIPv4Settings(addresses: [tunnelDeviceIp], subnetMasks: ["255.255.255.255"])
         ipv4.includedRoutes = [
-            NEIPv4Route(destinationAddress: tunnelDeviceIp, subnetMask: tunnelSubnetMask),
             NEIPv4Route(destinationAddress: tunnelFakeIp, subnetMask: "255.255.255.255")
         ]
         ipv4.excludedRoutes = [.default()]
